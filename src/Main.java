@@ -1,5 +1,10 @@
-public class Main {
+public class Main  implements IArithmeticsMult{
     public static void main(String[] args) {
         System.out.println("KOSMONAUCI\nDeveloper-WiktoriaRozanska\nJakubWijata\nDamianWdowiak\nMateuszRoslak\nDeveloper-ProjectAntZ");
+    }
+
+    @Override
+    public double Multiplication(double a, double b) {
+        return a*b;
     }
 }

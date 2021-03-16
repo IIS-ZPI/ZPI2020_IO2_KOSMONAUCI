@@ -4,7 +4,7 @@ public class Main implements IArithmeticsPow {
     }
 
     @Override
-    public double Modulo(double A, double B) {
+    public double Pow(double A, double B) {
         return Math.pow(A, B);
     }
 }

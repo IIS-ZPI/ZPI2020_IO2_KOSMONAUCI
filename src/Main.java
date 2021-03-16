@@ -4,7 +4,7 @@ public class Main implements IArithmeticsDiff{
     }
   
     @Override
-    public double Difference(Double A, Double B) {
-        return A-B;
+    public double Addition(double A, double B) {
+        return A+B;
     }
 }

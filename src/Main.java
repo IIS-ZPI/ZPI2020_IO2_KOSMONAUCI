@@ -1,9 +1,8 @@
-public class Main implements IArithmeticsDivision{
+public class Main  implements IArithmeticsMult, IArithmeticsPow, IArithmeticsDivision{
     public static void main(String[] args) {
         System.out.println("KOSMONAUCI\nDeveloper-WiktoriaRozanska\nJakubWijata\nDamianWdowiak\nMateuszRoslak\nDeveloper-ProjectAntZ");
     }
 
-    @Override
     public double Division(double A, double B) {
         if(B == 0){
             return 0;
@@ -11,5 +10,19 @@ public class Main implements IArithmeticsDivision{
         else{
             return A/B;
         }
+    }
+
+    public double Multiplication(double A, double B) {
+        return A*B;
+
+
+    @Override
+    public double Addition(double A, double B) {
+        return A+B;
+    }
+
+    @Override
+    public double Modulo(double A, double B) {
+        return Math.pow(A, B);
     }
 }

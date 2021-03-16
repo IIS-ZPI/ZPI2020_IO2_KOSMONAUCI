@@ -1,5 +1,4 @@
-
-public class Main  implements IArithmeticsMult{
+public class Main  implements IArithmeticsMult, IArithmeticsPow{
     public static void main(String[] args) {
         System.out.println("KOSMONAUCI\nDeveloper-WiktoriaRozanska\nJakubWijata\nDamianWdowiak\nMateuszRoslak\nDeveloper-ProjectAntZ");
     }
@@ -13,5 +12,10 @@ public class Main  implements IArithmeticsMult{
     public double Addition(double A, double B) {
         return A+B;
 
+    }
+
+    @Override
+    public double Modulo(double A, double B) {
+        return Math.pow(A, B);
     }
 }

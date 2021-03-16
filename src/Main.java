@@ -1,3 +1,4 @@
+
 public class Main  implements IArithmeticsMult{
     public static void main(String[] args) {
         System.out.println("KOSMONAUCI\nDeveloper-WiktoriaRozanska\nJakubWijata\nDamianWdowiak\nMateuszRoslak\nDeveloper-ProjectAntZ");
@@ -6,5 +7,11 @@ public class Main  implements IArithmeticsMult{
     @Override
     public double Multiplication(double a, double b) {
         return a*b;
+
+
+    @Override
+    public double Addition(double A, double B) {
+        return A+B;
+
     }
 }

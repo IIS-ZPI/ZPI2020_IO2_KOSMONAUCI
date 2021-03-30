@@ -33,5 +33,6 @@ public class Main  implements IArithmeticsMult, IArithmeticsPow, IArithmeticsDiv
         return A - B;
     }
 
+    //Jakub kom 1
 
 }

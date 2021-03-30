@@ -25,6 +25,8 @@ public class Main  implements IArithmeticsMult, IArithmeticsPow, IArithmeticsDiv
         return A + B;
     }
 
+    //Comment 2
+
     @Override
     public double Pow(double A, double B) {
         return Math.pow(A, B);
@@ -34,4 +36,6 @@ public class Main  implements IArithmeticsMult, IArithmeticsPow, IArithmeticsDiv
     public double Difference(Double A, Double B) {
         return A - B;
     }
+
+    //Comment 3
 }

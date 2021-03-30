@@ -32,4 +32,5 @@ public class Main  implements IArithmeticsMult, IArithmeticsPow, IArithmeticsDiv
     public double Difference(Double A, Double B) {
         return A - B;
     }
+    //Jakub kom 1
 }

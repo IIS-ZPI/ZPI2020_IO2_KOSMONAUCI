@@ -22,7 +22,7 @@ public class Main  implements IArithmeticsMult, IArithmeticsPow, IArithmeticsDiv
     public double Addition(double A, double B) {
         return A + B;
     }
-
+    //Jakub kom 3
     @Override
     public double Pow(double A, double B) {
         return Math.pow(A, B);
@@ -33,6 +33,6 @@ public class Main  implements IArithmeticsMult, IArithmeticsPow, IArithmeticsDiv
         return A - B;
     }
 
-    //Jakub kom 1
+
 
 }

@@ -27,11 +27,11 @@ public class Main  implements IArithmeticsMult, IArithmeticsPow, IArithmeticsDiv
     public double Pow(double A, double B) {
         return Math.pow(A, B);
     }
-
+    //Jakub kom 2
     @Override
     public double Difference(Double A, Double B) {
         return A - B;
     }
 
-    //Jakub kom 2
+
 }

@@ -30,6 +30,8 @@ public class Main  implements IArithmeticsMult, IArithmeticsPow, IArithmeticsDiv
         return Math.pow(A, B);
     }
 
+    //NEW FEATURE
+
     @Override
     public double Difference(Double A, Double B) {
         return A - B; //com1

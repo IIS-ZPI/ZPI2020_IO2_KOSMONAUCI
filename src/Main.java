@@ -17,7 +17,7 @@ public class Main  implements IArithmeticsMult, IArithmeticsPow, IArithmeticsDiv
     public double Multiplication(double A, double B) {
         return A * B;
     }
-
+    //ProjectAntZ comm
     @Override
     public double Addition(double A, double B) {
         return A + B;

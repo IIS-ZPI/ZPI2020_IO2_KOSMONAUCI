@@ -25,6 +25,8 @@ public class Main  implements IArithmeticsMult, IArithmeticsPow, IArithmeticsDiv
         return A + B; //com3
     }
 
+
+
     //Comment 2
 
     @Override
@@ -37,5 +39,7 @@ public class Main  implements IArithmeticsMult, IArithmeticsPow, IArithmeticsDiv
         return A - B; //com1
     }
 
+
     //Comment 3
+
 }

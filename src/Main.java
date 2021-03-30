@@ -20,7 +20,7 @@ public class Main  implements IArithmeticsMult, IArithmeticsPow, IArithmeticsDiv
 
     @Override
     public double Addition(double A, double B) {
-        return A + B;
+        return A + B; //com3
     }
 
     @Override

@@ -1,6 +1,8 @@
 public class Main  implements IArithmeticsMult, IArithmeticsPow, IArithmeticsDivision, IArithmeticsAdd, IArithmeticsDiff{
     public static void main(String[] args) {
         System.out.println("KOSMONAUCI\nDeveloper-WiktoriaRozanska\nJakubWijata\nDamianWdowiak\nMateuszRoslak\nDeveloper-ProjectAntZ");
+        Main main = new Main();
+        System.out.println("Dodawanie: 3 + 5 = "+main.Addition(3,5));
     }
 
     @Override

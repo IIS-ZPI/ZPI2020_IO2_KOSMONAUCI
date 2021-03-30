@@ -25,7 +25,7 @@ public class Main  implements IArithmeticsMult, IArithmeticsPow, IArithmeticsDiv
 
     @Override
     public double Pow(double A, double B) {
-        return Math.pow(A, B);
+        return Math.pow(A, B); //com2
     }
 
     @Override

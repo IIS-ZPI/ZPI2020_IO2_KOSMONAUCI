@@ -13,6 +13,8 @@ public class Main  implements IArithmeticsMult, IArithmeticsPow, IArithmeticsDiv
         }
     }
 
+    // Comment 1
+
     @Override
     public double Multiplication(double A, double B) {
         return A * B;

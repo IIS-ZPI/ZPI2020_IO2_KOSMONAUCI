@@ -38,6 +38,4 @@ public class Main  implements IArithmeticsMult, IArithmeticsPow, IArithmeticsDiv
     }
 
     //Comment 3
-
-    //zxadanie 6
 }

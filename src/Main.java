@@ -12,7 +12,7 @@ public class Main  implements IArithmeticsMult, IArithmeticsPow, IArithmeticsDiv
             return A / B;
         }
     }
-
+    // Multiplication method
     @Override
     public double Multiplication(double A, double B) {
         return A * B;

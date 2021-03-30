@@ -13,26 +13,33 @@ public class Main  implements IArithmeticsMult, IArithmeticsPow, IArithmeticsDiv
         }
     }
 
+    // Comment 1
+
     @Override
     public double Multiplication(double A, double B) {
         return A * B;
     }
-
+    // implementation of Addition method - IArithmeticsAdd
     @Override
     public double Addition(double A, double B) {
-        return A + B;
-    }
-    //Jakub kom 3
-    @Override
-    public double Pow(double A, double B) {
-        return Math.pow(A, B);
-    }
-    //Jakub kom 2
-    @Override
-    public double Difference(Double A, Double B) {
-        return A - B;
+        return A + B; //com3
     }
 
-    //Jakub kom 1
+
+
+    //Comment 2
+
+    @Override
+    public double Pow(double A, double B) {
+        return Math.pow(A, B); //com2
+    }
+
+    @Override
+    public double Difference(Double A, Double B) {
+        return A - B; //com1
+    }
+
+
+    //Comment 3
 
 }

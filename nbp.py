@@ -2,15 +2,15 @@ import requests
 import json
 
 
-def get_json(url):
-    x = requests.get('http://api.nbp.pl/api/exchangerates/tables/A/')
-    j = json.loads(x.text)
-    return j
-
-
 BASE_URL = "http://api.nbp.pl/api/"
-
 TABLES_URL = BASE_URL + "exchangerates/" + "tables/"
+RATES_URL = BASE_URL.join("exchangerates/").join("rates/")
+
+
+def get_json(url):
+    reqest_result = requests.get(url)
+    json_reqest = json.loads(reqest_result.text)
+    return json_reqest
 
 
 def get_table(table):
@@ -36,9 +36,6 @@ def get_date_table(table, date):
 def get_between_table(table, start_date, end_date):
     url = TABLES_URL + table + "/" + str(start_date) + "/" + str(end_date) + "/"
     return get_json(url)
-
-
-RATES_URL = BASE_URL.join("exchangerates/").join("rates/")
 
 
 def get_current_rate(table, code):

@@ -4,12 +4,16 @@ import json
 
 BASE_URL = "http://api.nbp.pl/api/"
 TABLES_URL = BASE_URL + "exchangerates/" + "tables/"
-RATES_URL = BASE_URL.join("exchangerates/").join("rates/")
+RATES_URL = BASE_URL + "exchangerates/" + "rates/"
 
 
 def get_json(url):
     reqest_result = requests.get(url)
-    json_reqest = json.loads(reqest_result.text)
+    if reqest_result.status_code != 404 and reqest_result.status_code != 400:
+        json_reqest = json.loads(reqest_result.text)
+    else:
+        json_reqest = None
+
     return json_reqest
 
 

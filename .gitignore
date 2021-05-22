@@ -4,3 +4,4 @@ out/
 /.idea
 ZPI2020_IO2_KOSMONAUCI.iml
 .pytest_cache
+ui/__pycache__

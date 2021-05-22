@@ -1,4 +1,4 @@
-import nbp
+from nbp import nbp
 
 
 def test_get_table():

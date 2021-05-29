@@ -1,34 +1,36 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
 
-from nbp.nbp import get_date_rate
+from nbp.nbp import get_between_rate
 
 
-def get_session_count(table, currency, target_date):
+def get_session_count(table, currency, last_date):
     # count = [raises, no changes, downs]
     count = [0, 0, 0]
 
-    next_date = datetime.today() - timedelta(1)
-    old_data = None
-    while next_date >= target_date:
-        new_data = get_date_rate(table=table, code=currency, date=next_date.strftime("%Y-%m-%d"))
+    current_date = datetime.today() - relativedelta(days=1)
+    old_mid = None
+    while current_date >= last_date:
+        new_data = get_between_rate(table=table, code=currency, start_date=last_date.strftime("%Y-%m-%d"), end_date=(last_date + relativedelta(weeks=1)).strftime("%Y-%m-%d"))
 
         if new_data is not None:
-            new_data = new_data["rates"][0]["mid"]
-            if old_data is not None:
-                if old_data < new_data:
-                    count[0] += 1
-                elif old_data > new_data:
-                    count[2] += 1
-                else:
-                    count[1] += 1
+            for r in new_data["rates"]:
+                mid = r["mid"]
+                if old_mid is not None:
+                    if old_mid < mid:
+                        count[0] += 1
+                    elif old_mid > mid:
+                        count[2] += 1
+                    else:
+                        count[1] += 1
 
-            old_data = new_data
+                old_mid = mid
 
-        next_date = next_date - timedelta(1)
+        last_date = last_date + relativedelta(weeks=1)
 
-    return {'raises': count[0], 'stable': count[1], 'downs': count[2]}
+    labels = ['raises', 'stable', 'downs']
+    return labels, count
 
 
 def get_last_weeks_count(currency, n=1):

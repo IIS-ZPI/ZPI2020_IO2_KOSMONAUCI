@@ -44,8 +44,8 @@ def calculate_statistic(delta_tab):
                 count = count + 1
 
         label = "[" + str(start) + ", " + str(end) + ")"
-        y.append(label)
-        x.append(count)
+        x.append(label)
+        y.append(count)
         start = end
         end = start + scope
 

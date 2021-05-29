@@ -13,6 +13,7 @@ def get_distribution_of_changes(currency_1, currency_2, start_time, end_time):
 
     return x, y
 
+
 def calculate_deltas(rates_1, rates_2):
     delta_currency = []
     for index, rate in enumerate(rates_1):

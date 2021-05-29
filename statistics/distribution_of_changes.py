@@ -8,21 +8,16 @@ def get_distribution_of_changes(currency_1, currency_2, start_time, end_time):
     if data_for_currency_1 is None or data_for_currency_2 is None:
         return 'Wrong some data'
 
-    delta_currency_1 = calculate_deltas(data_for_currency_1['rates'])
-    statistics_for_currency_1 = calculate_statistic(delta_currency_1)
+    delta = calculate_deltas(data_for_currency_1['rates'], data_for_currency_2['rates'])
+    x, y = calculate_statistic(delta)
 
-    delta_currency_2 = calculate_deltas(data_for_currency_2['rates'])
-    statistics_for_currency_2 = calculate_statistic(delta_currency_2)
-
-    return statistics_for_currency_1, statistics_for_currency_2
+    return x, y
 
 
-def calculate_deltas(rates):
+def calculate_deltas(rates_1, rates_2):
     delta_currency = []
-    for index, rate in enumerate(rates):
-        if index == 0:
-            continue
-        delta = float(rate[index]["mid"]) - float(rate[index - 1]["mid"])
+    for index, rate in enumerate(rates_1):
+        delta = float(rates_1[index]["mid"]) - float(rates_2[index]["mid"])
         delta_currency.append(delta)
 
     return delta_currency
@@ -34,7 +29,8 @@ def calculate_statistic(delta_tab):
 
     scope = (max_value - min_value) / 10.0
 
-    statistics = []
+    y = []
+    x = []
 
     start = min_value
     end = min_value + scope
@@ -48,8 +44,9 @@ def calculate_statistic(delta_tab):
                 count = count + 1
 
         label = "[" + str(start) + ", " + str(end) + ")"
-        statistics.append({'label': label, 'count': count})
+        x.append(label)
+        y.append(count)
         start = end
         end = start + scope
 
-    return statistics
+    return x, y

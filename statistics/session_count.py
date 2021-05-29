@@ -27,8 +27,9 @@ def get_session_count(table, currency, target_date):
             old_data = new_data
 
         next_date = next_date - timedelta(1)
+        labels=['raises', 'stable','downs']
 
-    return {'raises': count[0], 'stable': count[1], 'downs': count[2]}
+    return labels,count
 
 
 def get_last_weeks_count(currency, n=1):

@@ -1,7 +1,13 @@
+from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from pyqtgraph import PlotWidget
 import icons_rc
-import numpy as np
+import pyqtgraph as pg
+from statisticsCalculator.coefficients import *
+from statisticsCalculator.distribution_of_changes import *
+from statisticsCalculator.session_count import *
 
 
 class Ui_MainWindow(object):
@@ -48,16 +54,8 @@ class Ui_MainWindow(object):
         self.mode.addItem("")
         self.mode.currentTextChanged.connect(self.on_mode_changed)
         self.verticalLayout.addWidget(self.mode)
-        self.submode = QtWidgets.QComboBox(self.frame_2)
         font = QtGui.QFont()
         font.setPointSize(9)
-        self.submode.setFont(font)
-        self.submode.setObjectName("comboBox_2")
-        self.submode.addItem("")
-        self.submode.addItem("")
-        self.submode.addItem("")
-        self.submode.addItem("")
-        self.verticalLayout.addWidget(self.submode)
         self.gridLayout_3.addLayout(self.verticalLayout, 0, 0, 1, 1)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
@@ -157,6 +155,9 @@ class Ui_MainWindow(object):
         self.gridLayout_4.setObjectName("gridLayout_4")
         self.graphicsView = PlotWidget(self.frame_3)
         self.graphicsView.setObjectName("graphicsView")
+        self.graphicsView.setBackground('w')
+        self.graphicsView.showGrid(x=True, y=True)
+        self.graphicsView.setMouseEnabled(False, False)
         self.gridLayout_4.addWidget(self.graphicsView, 0, 0, 1, 1)
         self.gridLayout_2.addWidget(self.frame_3, 0, 1, 1, 1)
         self.gridLayout.addWidget(self.frame, 0, 0, 1, 1)
@@ -175,14 +176,11 @@ class Ui_MainWindow(object):
         self.mode.setItemText(0, _translate("MainWindow", "Determine the number of sessions"))
         self.mode.setItemText(1, _translate("MainWindow", "Statistic measures"))
         self.mode.setItemText(2, _translate("MainWindow", "Changes distribution"))
-        self.submode.setItemText(0, _translate("MainWindow", "Growth"))
-        self.submode.setItemText(1, _translate("MainWindow", "Inheritance"))
-        self.submode.setItemText(2, _translate("MainWindow", "No change"))
         self.time_interval_label.setText(_translate("MainWindow", "Time Interval"))
         self.time_interval.setItemText(0, _translate("MainWindow", "1 week"))
         self.time_interval.setItemText(1, _translate("MainWindow", "2 weeks"))
         self.time_interval.setItemText(2, _translate("MainWindow", "1 month"))
-        self.time_interval.setItemText(3, _translate("MainWindow", "1 quarter "))
+        self.time_interval.setItemText(3, _translate("MainWindow", "1 quarter"))
         self.time_interval.setItemText(4, _translate("MainWindow", "half a year"))
         self.time_interval.setItemText(5, _translate("MainWindow", "1 year"))
         self.label_3.setText(_translate("MainWindow", "Currency"))
@@ -208,37 +206,117 @@ class Ui_MainWindow(object):
             self.currency_2_label.hide()
             self.time_interval.show()
             self.time_interval_label.show()
-            self.submode.show()
-            self.submode.removeItem(3)
-            self.submode.setItemText(0, _translate("MainWindow", "Growth"))
-            self.submode.setItemText(1, _translate("MainWindow", "Inheritance"))
-            self.submode.setItemText(2, _translate("MainWindow", "No change"))
+
+            self.prepare_time_interval_list(_translate)
         elif value == 'Statistic measures':
             self.currency_2.hide()
             self.currency_2_label.hide()
             self.time_interval.show()
             self.time_interval_label.show()
-            self.submode.show()
-            self.submode.addItem("")
-            self.submode.setItemText(0, _translate("MainWindow", "Median"))
-            self.submode.setItemText(1, _translate("MainWindow", "Dominant"))
-            self.submode.setItemText(2, _translate("MainWindow", "Standard deviation"))
-            self.submode.setItemText(3, _translate("MainWindow", "Coefficient of variation "))
+
+            self.prepare_time_interval_list(_translate)
         else:
-            self.submode.removeItem(3)
             self.currency_2.show()
             self.currency_2_label.show()
-            self.time_interval.hide()
-            self.time_interval_label.hide()
-            self.submode.hide()
+
+            [self.time_interval.removeItem(0) for _ in range(6)]
+
+            self.time_interval.addItem("")
+            self.time_interval.addItem("")
+
+            self.time_interval.setItemText(0, _translate("MainWindow", "1 month"))
+            self.time_interval.setItemText(1, _translate("MainWindow", "1 quarter"))
+
+    def prepare_time_interval_list(self, _translate):
+        [self.time_interval.removeItem(0) for _ in range(6)]
+        [self.time_interval.addItem("") for _ in range(6)]
+
+        self.time_interval.setItemText(0, _translate("MainWindow", "1 week"))
+        self.time_interval.setItemText(1, _translate("MainWindow", "2 weeks"))
+        self.time_interval.setItemText(2, _translate("MainWindow", "1 month"))
+        self.time_interval.setItemText(3, _translate("MainWindow", "1 quarter"))
+        self.time_interval.setItemText(4, _translate("MainWindow", "half a year"))
+        self.time_interval.setItemText(5, _translate("MainWindow", "1 year"))
 
     def draw(self):
         self.graphicsView.clear()
-        print(self.mode.currentText())
-        if self.submode.isVisible():
-            print(self.submode.currentText())
-            print(self.time_interval.currentText())
-        else:
-            print(self.currency_2.currentText())
 
-        print(self.currency.currentText())
+        currency = self.currency.currentText()
+        interval = self.time_interval.currentText()
+
+        if self.mode.currentText() == "Statistic measures":
+            if interval == "1 week":
+                timedelta = relativedelta(weeks=1)
+            elif interval == "2 weeks":
+                timedelta = relativedelta(weeks=1)
+            elif interval == "1 month":
+                timedelta = relativedelta(months=1)
+            elif interval == "1 quarter":
+                timedelta = relativedelta(months=3)
+            elif interval == "half a year":
+                timedelta = relativedelta(months=6)
+            elif interval == "1 year":
+                timedelta = relativedelta(years=1)
+
+            curr_date = datetime.now()
+            date = curr_date - timedelta
+            date = date.strftime("%Y-%m-%d")
+            curr_date = curr_date.strftime("%Y-%m-%d")
+
+            object = get_coefficients(currency, date, curr_date)
+
+            labels = ("", "median", "stdDev", "mode", "coeffVar")
+            y = [object.median, object.stDeviation, object.mode, object.coefficientVariation]
+
+            ticks = [list(zip(range(len(labels)), labels))]
+            x = [i for i in range(1, len(labels))]
+
+            bargraph = pg.BarGraphItem(x=x, height=y, width=0.6, brush="#5871A3")
+            axisX = self.graphicsView.getAxis('bottom')
+            axisX.setTicks(ticks)
+
+            self.graphicsView.addItem(bargraph)
+        elif self.mode.currentText() == "Changes distribution":
+            if interval == "1 month":
+                timedelta = relativedelta(months=1)
+            elif interval == "1 quarter":
+                timedelta = relativedelta(months=3)
+
+            curr_date = datetime.now()
+            date = curr_date - timedelta
+            date = date.strftime("%Y-%m-%d")
+            curr_date = curr_date.strftime("%Y-%m-%d")
+
+            labels, y = get_distribution_of_changes(currency, self.currency_2.currentText(), date,
+                                                    curr_date)
+
+            ticks = [list(zip(range(len(labels) + 1), tuple([""] + labels)))]
+            x = [i for i in range(1, len(labels) + 1)]
+
+            bargraph = pg.BarGraphItem(x=x, height=y, width=0.6, brush="#5871A3")
+            axisX = self.graphicsView.getAxis('bottom')
+            axisX.setTicks(ticks)
+
+            self.graphicsView.addItem(bargraph)
+        else:
+            if interval == "1 week":
+                labels, y = get_last_weeks_count(currency, 1)
+            elif interval == "2 weeks":
+                labels, y = get_last_weeks_count(currency, 2)
+            elif interval == "1 month":
+                labels, y = get_last_months_count(currency, 1)
+            elif interval == "1 quarter":
+                labels, y = get_last_months_count(currency, 3)
+            elif interval == "half a year":
+                labels, y = get_last_months_count(currency, 6)
+            elif interval == "1 year":
+                labels, y = get_last_months_count(currency, 12)
+
+            ticks = [list(zip(range(len(labels) + 1), tuple([""] + labels)))]
+            x = [i for i in range(1, len(labels) + 1)]
+
+            bargraph = pg.BarGraphItem(x=x, height=y, width=0.6, brush="#5871A3")
+            axisX = self.graphicsView.getAxis('bottom')
+            axisX.setTicks(ticks)
+
+            self.graphicsView.addItem(bargraph)

@@ -8,19 +8,32 @@ def get_distribution_of_changes(currency_1, currency_2, start_time, end_time):
     if data_for_currency_1 is None or data_for_currency_2 is None:
         return 'Wrong some data'
 
-    delta = calculate_deltas(data_for_currency_1['rates'], data_for_currency_2['rates'])
+    rates1_to_rates2 = calculate_rates1_to_rates2(data_for_currency_1['rates'], data_for_currency_2['rates'])
+    delta = calculate_delta(rates1_to_rates2)
     x, y = calculate_statistic(delta)
 
     return x, y
 
 
-def calculate_deltas(rates_1, rates_2):
-    delta_currency = []
+def calculate_rates1_to_rates2(rates_1, rates_2):
+    relations = []
     for index, rate in enumerate(rates_1):
-        delta = float(rates_1[index]["mid"]) - float(rates_2[index]["mid"])
-        delta_currency.append(delta)
+        temp = float(rates_1[index]["mid"])/float(rates_2[index]["mid"])
+        relations.append(temp)
 
-    return delta_currency
+    return relations
+
+
+def calculate_delta(relations):
+    deltas = []
+    for index, delta in enumerate(relations):
+        if index == 0:
+            continue
+
+        temp = relations[index]-relations[index-1]
+        deltas.append(temp)
+
+    return deltas
 
 
 def calculate_statistic(delta_tab):

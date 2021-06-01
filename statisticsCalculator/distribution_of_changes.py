@@ -18,7 +18,7 @@ def get_distribution_of_changes(currency_1, currency_2, start_time, end_time):
 def calculate_rates1_to_rates2(rates_1, rates_2):
     relations = []
     for index, rate in enumerate(rates_1):
-        temp = float(rates_1[index]["mid"])/float(rates_2[index]["mid"])
+        temp = float(rates_2[index]['mid'])/float(rates_1[index]['mid'])
         relations.append(temp)
 
     return relations

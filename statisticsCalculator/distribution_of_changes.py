@@ -53,9 +53,9 @@ def calculate_statistic(delta_tab):
             if start <= change_in_day < end:
                 count = count + 1
 
-        short_start = float("{:.2f}".format(start))
-        short_end = float("{:.2f}".format(end))
-        label = "[" + str(short_start) + ", " + str(short_end) + ")"
+        short_start = float("{:.4f}".format(start))
+        short_end = float("{:.4f}".format(end))
+        label = "[" + str(short_start) + ",\n" + str(short_end) + ")"
         x.append(label)
         y.append(count)
         start = end

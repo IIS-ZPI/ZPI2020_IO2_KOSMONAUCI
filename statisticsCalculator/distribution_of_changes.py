@@ -47,7 +47,7 @@ def calculate_statistic(delta_tab):
 
     start = min_value
     end = min_value + scope
-    while start <= max_value::
+    while start <= max_value:
         count = 0
         for change_in_day in delta_tab:
             if start <= change_in_day < end:

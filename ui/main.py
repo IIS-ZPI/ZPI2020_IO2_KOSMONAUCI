@@ -240,6 +240,9 @@ class Ui_MainWindow(object):
 
     def draw(self):
         self.graphicsView.clear()
+        self.graphicsView.setLabel('bottom', '')
+        self.graphicsView.setLabel('left', '')
+        styles = {'color': 'grey', 'font-size': '20px'}
 
         currency = self.currency.currentText()
         interval = self.time_interval.currentText()
@@ -277,6 +280,7 @@ class Ui_MainWindow(object):
 
             self.graphicsView.addItem(bargraph)
         elif self.mode.currentText() == "Changes distribution":
+            currency_2 = self.currency_2.currentText()
             if interval == "1 month":
                 timedelta = relativedelta(months=1)
             elif interval == "1 quarter":
@@ -287,8 +291,7 @@ class Ui_MainWindow(object):
             date = date.strftime("%Y-%m-%d")
             curr_date = curr_date.strftime("%Y-%m-%d")
 
-            labels, y = get_distribution_of_changes(currency, self.currency_2.currentText(), date,
-                                                    curr_date)
+            labels, y = get_distribution_of_changes(currency, currency_2, date, curr_date)
 
             ticks = [list(zip(range(len(labels) + 1), tuple([""] + labels)))]
             x = [i for i in range(1, len(labels) + 1)]
@@ -296,6 +299,9 @@ class Ui_MainWindow(object):
             bargraph = pg.BarGraphItem(x=x, height=y, width=0.6, brush="#5871A3")
             axisX = self.graphicsView.getAxis('bottom')
             axisX.setTicks(ticks)
+
+            self.graphicsView.setLabel('bottom', currency_2, **styles)
+            self.graphicsView.setLabel('left', 'Number of changes', **styles)
 
             self.graphicsView.addItem(bargraph)
         else:
@@ -318,5 +324,7 @@ class Ui_MainWindow(object):
             bargraph = pg.BarGraphItem(x=x, height=y, width=0.6, brush="#5871A3")
             axisX = self.graphicsView.getAxis('bottom')
             axisX.setTicks(ticks)
+
+            self.graphicsView.setLabel('left', 'Number of occurrence', **styles)
 
             self.graphicsView.addItem(bargraph)

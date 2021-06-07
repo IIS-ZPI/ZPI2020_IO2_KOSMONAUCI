@@ -2,6 +2,9 @@ from nbp.nbp import get_between_rate
 
 
 def get_distribution_of_changes(currency_1, currency_2, start_time, end_time):
+    if currency_1 == currency_2:
+        return [], []
+
     data_for_currency_1 = get_between_rate('A', currency_1, start_time, end_time)
     data_for_currency_2 = get_between_rate('A', currency_2, start_time, end_time)
 

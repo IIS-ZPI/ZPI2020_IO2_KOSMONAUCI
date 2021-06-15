@@ -1,0 +1,9 @@
+.idea
+*.iml
+out/
+/.idea
+ZPI2020_IO2_KOSMONAUCI.iml
+.pytest_cache
+ui/__pycache__
+nbp/__pycache__
+statisticsCalculator/__pycache__/

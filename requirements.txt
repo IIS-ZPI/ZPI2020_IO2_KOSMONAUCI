@@ -1,0 +1,4 @@
+pyqtgraph==0.12.1
+requests==2.25.1
+PyQt5==5.15.4
+python_dateutil==2.8.1
